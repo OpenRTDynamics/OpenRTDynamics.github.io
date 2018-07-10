@@ -309,7 +309,7 @@
 
 
 	 	<div>
-	 		<h1>OpenRTDynamics</h1>  Build real-time capable control sytems
+	 		<h1>OpenRTDynamics</h1>  Build real-time capable control sytems for Linux and Mac
 	 	</div>
 
 	    <div>
@@ -376,7 +376,7 @@
 
 <h1 id="SecOverview">Overview</h1>
 
-<p>OpenRTDynamics (ORTD) is a framework to implement block/signal based control- or signal processing systems and aims to be an open-source alternative to Simulink Coder / LabView / Xcos code generation. This framework is suitable for implementing discrete-time signal processing algorithms, using the same principles like in Scicos/Xcos or Simulink. However, schematics are described by combining special Scilab functions provided by the framework (a typical Scilab-file describing an ORTD-schematic is e.g. <a href="https://sourceforge.net/p/openrtdynamics/code/HEAD/tree/trunk/examples/oscillator.sce">[]</a>). A comparision to Xcos and Simulink is given in <a href="/Comparison.pdf">Comparison.pdf</a>. The obtained programs are real-time capable.</p>
+<p>OpenRTDynamics (ORTD) is a framework to implement block/signal based control- or signal processing systems and aims to be an open-source alternative to Simulink Coder / LabView / Xcos code generation. This framework is suitable for implementing discrete-time signal processing algorithms, using the same principles like in Scicos/Xcos or Simulink. However, schematics are described by combining special Scilab functions provided by the framework (a typical Scilab-file describing an ORTD-schematic is e.g. <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/examples/oscillator.sce">[]</a>). A comparision to Xcos and Simulink is given in <a href="/Comparison.pdf">Comparison.pdf</a>. The obtained programs are real-time capable.</p>
 
 
 
@@ -387,7 +387,7 @@
 <h2>The newly introducted features include:</h2>
 
 <p>
-	Additionally to standard approaches, ORTD features the ability to implement state machines represented by multiple, switching subsystems (each subsystem corresponds to one state)  <a href="https://sourceforge.net/p/openrtdynamics/code/HEAD/tree/trunk/examples/statemachine/state_machine_ConditionalSwitches.sce">[]</a>  . Subsystems (sub-simulations) can also run in the context of separated threads (with or without synchronisation to another one), e.g. to divide high- and low frequency portions   <a href="https://sourceforge.net/p/openrtdynamics/code/HEAD/tree/trunk/examples/ThreadedFrequencyDivision/MotionStim.sce">[]</a>  or to run computationally intensive tasks in the background. Because of a remote control interface  <a href="https://github.com/christianausb/OpenRTDynamics/tree/master/Examples/nodejs_webinterface_Level2">[]</a>  and the ability to include Scilab-Code (similar to Matlab S-functions) that could execute e.g. calibration routines  <a href="https://sourceforge.net/p/openrtdynamics/code/HEAD/tree/trunk/modules/scilab/demo/ScilabRTTest/template.sce">[]</a>, ORTD is also ideally suited for laboratory automation.&#160;   Hereby, the ability to online-replace sub-schematics (sub-simulations) with replacements  <a href="https://sourceforge.net/p/openrtdynamics/code/HEAD/tree/trunk/modules/nested/demo/online_replacement/main_experiment.sce">[]</a> <a href="https://sourceforge.net/p/openrtdynamics/code/HEAD/tree/trunk/modules/nested/demo/online_replacement/create_replacement.sce">[]</a>  removes the effort of restarting the main real-time program when new algorithms are designed. An example for automating experiments using these conceps:  <a href="https://sourceforge.net/p/openrtdynamics/code/HEAD/tree/trunk/modules/Automation/demo/Example2/RTmain.sce">[]</a>.  The reliability of ORTD has been proven in a number of large experimental set-ups in medical engineering.
+	Additionally to standard approaches, ORTD features the ability to implement state machines represented by multiple, switching subsystems (each subsystem corresponds to one state)  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/examples/statemachine/state_machine_ConditionalSwitches.sce">[]</a>  . Subsystems (sub-simulations) can also run in the context of separated threads (with or without synchronisation to another one), e.g. to divide high- and low frequency portions   <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/examples/ThreadedFrequencyDivision/MotionStim.sce">[]</a>  or to run computationally intensive tasks in the background. Because of a remote control interface  <a href="https://github.com/christianausb/OpenRTDynamics/tree/master/Examples/nodejs_webinterface_Level2">[]</a>  and the ability to include Scilab-Code (similar to Matlab S-functions) that could execute e.g. calibration routines  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/scilab/demo/ScilabRTTest/template.sce">[]</a>, ORTD is also ideally suited for laboratory automation.&#160;   Hereby, the ability to online-replace sub-schematics (sub-simulations) with replacements  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/nested/demo/online_replacement/main_experiment.sce">[]</a> <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/nested/demo/online_replacement/create_replacement.sce">[]</a>  removes the effort of restarting the main real-time program when new algorithms are designed. An example for automating experiments using these conceps:  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/Automation/demo/Example2/RTmain.sce">[]</a>.  The reliability of ORTD has been proven in a number of large experimental set-ups in medical engineering.
 </p>
 
 
@@ -396,7 +396,7 @@
 </p>
 
 <p>
-	Slides that give a short introduction are available:&#160;<a href="/ortd_slides.pdf">ortd_slides.pdf</a>&#160;(updated 02.6.2014). For technical details please refer to the&#160;<a href="https://sourceforge.net/p/openrtdynamics/code/HEAD/tree/trunk/README.md">README</a>. It also includes intructions on how to install ORTD on embedded ARM-systems, like the beaglebone. A tutorial and plenty of examples for each feature of ORTD are included in the package and finally, documentation for each individual block is available through the Scilab-Help.
+	Slides that give a short introduction are available:&#160;<a href="/ortd_slides.pdf">ortd_slides.pdf</a>&#160;(updated 02.6.2014). For technical details please refer to the&#160;<a href="https://github.com/OpenRTDynamics/ORTD/blob/master/README.md">README</a>. It also includes intructions on how to install ORTD on embedded ARM-systems, like the beaglebone. A tutorial and plenty of examples for each feature of ORTD are included in the package and finally, documentation for each individual block is available through the Scilab-Help.
 </p>
 
 <p>
@@ -507,7 +507,7 @@ In this example, an ORTD simulation (real-time part) is communicating to a node.
 <h2>Future Directions</h2>
 
 <p>
-In addition to the existing state machines, logic constructs like Select/Case (done; in svn)  <a href="https://sourceforge.net/p/openrtdynamics/code/HEAD/tree/trunk/examples/ExecutionControl/SelectCase.sce">[]</a>  , for-loops  <a href="https://sourceforge.net/p/openrtdynamics/code/HEAD/tree/trunk/examples/ExecutionControl/ForLoop.sce">[]</a> (also done; in svn)  , do-until-loops will be added. These apply to nested simulations that are e.g. conditionally executed or for multiple times in a loop. For visualisation and user control purposes, a strong collaboration with PaPi is ongoing to allow automatically generated user interfaces  (with minimal effort for the user) that allow e.g. interaction with automated experiments.
+In addition to the existing state machines, logic constructs like Select/Case (done; in svn)  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/examples/ExecutionControl/SelectCase.sce">[]</a>  , for-loops  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/examples/ExecutionControl/ForLoop.sce">[]</a> (also done; in svn)  , do-until-loops will be added. These apply to nested simulations that are e.g. conditionally executed or for multiple times in a loop. For visualisation and user control purposes, a strong collaboration with PaPi is ongoing to allow automatically generated user interfaces  (with minimal effort for the user) that allow e.g. interaction with automated experiments.
 </p>
 
 
@@ -537,7 +537,7 @@ In addition to the existing state machines, logic constructs like Select/Case (d
 <h2>Linux rt-preempt Benchmarks</h2>
 
 <p>
-A benchmark to evaluate the real-time capabilities is available:  <a href="https://sourceforge.net/p/openrtdynamics/code/HEAD/tree/trunk/modules/synchronisation/demo/TestRealTime.sce">Cycletest</a>
+A benchmark to evaluate the real-time capabilities is available:  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/synchronisation/demo/TestRealTime.sce">Cycletest</a>
 </p>
 
 <p>
