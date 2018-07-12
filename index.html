@@ -418,54 +418,41 @@
 
 
 <div class="sec">
-
     <h1 id="SecHow">How it works</h1>
 
 
     <div class="wrap2">
-    <div class="codebound" style="width: 800px;">
-        <pre><code class="Scilab code">
+        <div class="codebound" style="width: 800px;">
+            <pre><code class="Scilab code">
 // Superblock: A simple oscillator without damping
 function [sim, x,v] = oscillator(sim, u)
     // create a feedback signal
     [sim,x_feedback] = libdyn_new_feedback(sim);
 
         // use this as a normal signal
-        [sim,a] = ld_add(sim, ev, list(u, x_feedback), [1, -1]);
-        [sim,v] = ld_ztf(sim, ev, a, 1/(z-1) * T_a ); // Integrator approximation
-        [sim,x] = ld_ztf(sim, ev, v, 1/(z-1) * T_a ); // Integrator approximation  
+        [sim,a] = ld_add(sim, 0, list(u, x_feedback), [1, -1]);
+        [sim,v] = ld_ztf(sim, 0, a, 1/(z-1) * T_a ); // Integrator approximation
+        [sim,x] = ld_ztf(sim, 0, v, 1/(z-1) * T_a ); // Integrator approximation  
     
         // feedback gain
-        [sim,x_gain] = ld_gain(sim, ev, x, 0.6);
+        [sim,x_gain] = ld_gain(sim, 0, x, 0.6);
     
     // close loop x_gain = x_feedback
     [sim] = libdyn_close_loop(sim, x_gain, x_feedback);
 endfunction            
-    </code></pre>
-    </div>
+            </code></pre>
+        </div>
 
-        <ul>
-            <li>Each function call ld_* describes the relation between input- and output signals in dependence of potential inner states.</li>
-            <li><tt>libdyn_new_feedback</tt> and <tt>libdyn_close_loop</tt> are used to realize feedback-loops. </li>
-            <li>By defining the function <tt>oscillator</tt>, a new function for describing I/O relationships is introduced</li>
-
-        </ul>
-
-    <div>
-
-
+        <div>
+            <ul>
+                <li>Each function call ld_* describes the relation between input- and output signals in dependence of potential inner states.</li>
+                <li><tt>libdyn_new_feedback</tt> and <tt>libdyn_close_loop</tt> are used to realize feedback-loops. </li>
+                <li>By defining the function <tt>oscillator</tt>, a new function for describing I/O relationships is introduced</li>
+            </ul>
+        </div>
 
     </div>
-
-    </div>
-
-
-    <p>
-    </p>
-
-
 </div>
-
 
 
 
@@ -531,7 +518,7 @@ endfunction
 
     <tt>echo MACOSX > target.conf</tt>
 
-    <p>The compile and install using</p>
+    <p>To compile and install issue</p>
 
     <p>
     <tt>make config</tt> <br>
@@ -540,7 +527,7 @@ endfunction
     </p>
 
 
-    <p>Try to run the interpreter</p>
+    <p>Now, you can try to run the interpreter</p>
 
     <p>
     <tt>ortdrun</tt> <br>
@@ -554,7 +541,159 @@ endfunction
 </div>
 
 
+
+
+<h1 id="">Feature Overview</h1>
+
+
+<p>Several modules are available to extend the basic functions:</p>
+
+<p>
+<ul>
+    <li>Online replacement of sub-controllers; Yes, can can exchange wires and blocks during the controller is running (modules/nested)</li>
+    <li>State machines (modules/nested)</li>
+    <li>Simulations running in threads (modules/nested)</li>
+    <li>Mathematical formula parsing (modules/muparser)</li>
+    <li>Vector handling blocks (modules/basic_ldblocks)</li>
+    <li>Calling Scilab from the simulation (modules/scilab)</li>
+    <li>Remote control interface (modules/rt_server)</li>
+    <li>Starting external processes (modules/ext_process)</li>
+    <li>Timer for simulations running in threads (pending) (modules/synchronisation)</li>
+<!--     <li>Scicos to ORTD block wrapper (modules/scicos_blocks)  <a href="https://github.com/christianausb/OpenRTDynamics/tree/master/include_hart_V2">[A template for easily including Xcos-blocks]</a></li> -->
+    <li>A framework for sending/receiving UDP-packets (modules/udp_communication)</li>
+</ul>
+</p>
+
+
+
+
+<h1 id="">Basic concepts</h1>
+
+ORTD enables basic programming concets like threads, for-loops, state-machines ...
+
+
+<div class="sec">
+    <h1 id="SecHow">Threads</h1>
+
+
+    <div class="wrap2">
+        <div class="codebound" style="width: 800px;">
+            <pre><code class="Scilab code">
+// The main real-time thread
+function [sim, outlist, userdata] = Thread_MainRT(sim, inlist, userdata)
+  // This will run in a thread
+  [sim, Tpause] = ld_const(sim, 0, 1/27);  // The sampling time that is constant at 27 Hz in this example
+  [sim, out] = ld_ClockSync(sim, 0, in=Tpause); // synchronise this simulation
+
+  // print the time interval
+  [sim] = ld_printf(sim, 0, Tpause, "Time interval [s]", 1);
+
+  // save the absolute time into a file
+  [sim, time] = ld_clock(sim, 0);
+  [sim] = ld_savefile(sim, 0, fname="AbsoluteTime.dat", source=time, vlen=1);
+
+  //
+  // Add you own control system here
+  //
+
+  outlist = list();
+endfunction
+
+
+ThreadPrioStruct.prio1=ORTD.ORTD_RT_NORMALTASK; // or  ORTD.ORTD_RT_REALTIMETASK
+ThreadPrioStruct.prio2=0; // for ORTD.ORTD_RT_REALTIMETASK: 1-99 as described in   man sched_setscheduler
+                          // for ORTD.ORTD_RT_NORMALTASK this is the nice-value (higher value means less priority)
+ThreadPrioStruct.cpu = -1; // The CPU on which the thread will run; -1 dynamically assigns to a CPU, 
+                           // counting of the CPUs starts at 0
+                           
+
+
+[sim, StartThread] = ld_initimpuls(sim, 0); // triggers your computation only once
+[sim, outlist, computation_finished] = ld_async_simulation(sim, 0, ...
+                      inlist=list(), ...
+                      insizes=[], outsizes=[], ...
+                      intypes=[], outtypes=[], ...
+                      nested_fn = Thread_MainRT, ...
+                      TriggerSignal=StartThread, name="MainRealtimeThread", ...
+                      ThreadPrioStruct, userdata=list() );
+
+       
+            </code></pre>
+        </div>
+
+        <div>
+            <ul>
+                <li>Unlimited number of threads</li>
+                <li>Each thread has its own loop-timing as enforced by <tt>ld_ClockSync</tt> </li>
+                <li>Irregular timing possible</li>
+              
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="sec">
+    <h1 id="SecHow">For-loops</h1>
+
+
+    <div class="wrap3">
+        <div class="codebound" style="width: 800px;">
+            <pre><code class="Scilab code">
+function [sim, outlist, userdata] = ForLoopFn(sim, inlist, LoopCounter, userdata)
+  // input data
+  in1 = inlist(1);
+  in2 = inlist(2);
+
+  // sample data for the output
+  [sim, outdata1] = ld_constvec(sim, 0, vec=[1200]);
+
+  [sim, LoopCounter] = ld_Int32ToFloat(sim, 0, LoopCounter);
+  [sim] = ld_printf(sim, 0, LoopCounter, "Loop count active: ", 1);
+
+  // the user defined output signals of this nested simulation
+  outlist = list(outdata1);
+endfunction
+       
+[sim, outlist, userdata] = ld_ForLoopNest(sim, 0, ...
+inlist=list(data1, data2), ..
+insizes=[1,2], outsizes=[1], ... 
+intypes=[ORTD.DATATYPE_FLOAT,ORTD.DATATYPE_FLOAT  ], outtypes=[ORTD.DATATYPE_FLOAT], ...
+ForLoop_fn=ForLoopFn, SimnestName="ForLoopTest", NitSignal=CountTo, list("UserdataTest")  );
+            </code></pre>
+        </div>
+
+        <div>
+            <ul>
+                <li>Nested simultion is executed for each turn of the for-loop.</li>
+              
+              
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+<div class="sec">
+    <h1 id="SecHow">Documentation</h1>
+
+
+    <a href="scilab_en_US_help/index.html"> HTML-Documentation pages </a>
+
+</div>
+
+
+
+
 <h1 id="SecExamples">Examples</h1>
+
 
 <h2>Data Visualisation / User Control</h2>
 
@@ -603,28 +742,7 @@ In addition to the existing state machines, logic constructs like Select/Case (d
 </p>
 
 
-<h1>Components / Modules</h1>
 
-
-<p>ORTD consists of multple parts. The main one is the libdyn simulator library. Additionally, there are modules i.e. for remote comunication or nesting simulations.</p>
-
-<p>The most important features are</p>
-
-<p>
-<ul>
-    <li>Online replacement of sub-controllers; Yes, can can exchange wires and blocks during the controller is running (modules/nested)</li>
-    <li>State machines (modules/nested)</li>
-    <li>Simulations running in threads (modules/nested)</li>
-    <li>Mathematical formula parsing (modules/muparser)</li>
-    <li>Vector handling blocks (modules/basic_ldblocks)</li>
-    <li>Calling Scilab from the simulation (modules/scilab)</li>
-    <li>Remote control interface (modules/rt_server)</li>
-    <li>Starting external processes (modules/ext_process)</li>
-    <li>Timer for simulations running in threads (pending) (modules/synchronisation)</li>
-<!--     <li>Scicos to ORTD block wrapper (modules/scicos_blocks)  <a href="https://github.com/christianausb/OpenRTDynamics/tree/master/include_hart_V2">[A template for easily including Xcos-blocks]</a></li> -->
-    <li>A framework for sending/receiving UDP-packets (modules/udp_communication)</li>
-</ul>
-</p>
 <!-- 
 <h2>Linux rt-preempt Benchmarks</h2>
 
