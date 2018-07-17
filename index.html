@@ -459,7 +459,7 @@ endfunction
 <h1>What you get</h1>
 
 <p>
-	ORTD features the ability to implement state machines represented by multiple, switching subsystems (each subsystem corresponds to one state)  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/examples/statemachine/state_machine_ConditionalSwitches.sce">[]</a>  . Subsystems (sub-simulations) can also run in the context of separated threads (with or without synchronisation to another one), e.g. to divide high- and low frequency portions   <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/examples/ThreadedFrequencyDivision/MotionStim.sce">[]</a>  or to run computationally intensive tasks in the background. Because of a remote control interface  <a href="https://github.com/christianausb/OpenRTDynamics/tree/master/Examples/nodejs_webinterface_Level2">[]</a>  and the ability to include Scilab-Code (similar to Matlab S-functions) that could execute e.g. calibration routines  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/scilab/demo/ScilabRTTest/template.sce">[]</a>, ORTD is also ideally suited for laboratory automation.&#160;   Hereby, the ability to online-replace sub-schematics (sub-simulations) with replacements  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/nested/demo/online_replacement/main_experiment.sce">[]</a> <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/nested/demo/online_replacement/create_replacement.sce">[]</a>  removes the effort of restarting the main real-time program when new algorithms are designed. An example for automating experiments using these conceps:  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/Automation/demo/Example2/RTmain.sce">[]</a>.  The reliability of ORTD has been proven in a number of large experimental set-ups in medical engineering.
+	ORTD features the ability to implement state machines represented by multiple, switching subsystems (each subsystem corresponds to one state)  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/examples/statemachine/state_machine_ConditionalSwitches.sce">[]</a>  . Subsystems (sub-simulations) can also run in the context of separated threads (with or without synchronisation to another one), e.g. to divide high- and low frequency portions   <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/examples/ThreadedFrequencyDivision/MotionStim.sce">[]</a>  or to run computationally intensive tasks in the background. Because of a remote control interface  <a href="https://github.com/christianausb/OpenRTDynamics/tree/master/Examples/nodejs_webinterface_Level2">[]</a>  and the ability to include Scilab-Code (similar to Matlab S-functions) that could execute e.g. calibration routines  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/scilab/demo/ScilabRTTest/template.sce">[]</a>, ORTD is also ideally suited for laboratory automation.&#160;   Hereby, the ability to online-replace sub-schematics (sub-simulations) with replacements  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/nested/demo/online_replacement/main_experiment.sce">[]</a> <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/nested/demo/online_replacement/create_replacement.sce">[]</a>  removes the effort of restarting the main real-time program when new algorithms are designed. An example for automating experiments using these concepts:  <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/Automation/demo/Example2/RTmain.sce">[]</a>.  The reliability of ORTD has been proven in a number of large experimental set-ups in medical engineering.
 </p>
 
 
@@ -569,7 +569,7 @@ endfunction
 
 <h1 id="">Basic concepts</h1>
 
-ORTD enables basic programming concets like threads, for-loops, state-machines ...
+ORTD supports basic features like (realtime) threads, for-loops, state-machines ...
 
 
 <div class="sec">
@@ -693,6 +693,22 @@ ForLoop_fn=ForLoopFn, SimnestName="ForLoopTest", NitSignal=CountTo, list("Userda
 
 
 <h1 id="SecExamples">Examples</h1>
+
+<p>
+A plenty amount of examples demonstrating the use of various functions is given in the  
+<a href="https://github.com/OpenRTDynamics/ORTD/blob/master/examples/">example-folder</a>.
+
+Furthermore, examples specific to the individual modules (e.g. how to interface I2C-hardware) are generally found in the demo-subfolder of each module. 
+<a href="https://github.com/OpenRTDynamics/ORTD/blob/master/modules/">The folder of all modules</a>.
+
+
+
+A <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/examples/TemplateModule_V2/">template</a> for the development of modules/plugins in C++ might be further useful to integrate custom-hardware.
+
+</p>
+
+
+
 
 
 <h2>Data Visualisation / User Control</h2>
