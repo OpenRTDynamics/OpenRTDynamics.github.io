@@ -190,6 +190,8 @@
 
             margin-left:20px;
             margin-right:20px;
+
+            /*max-width: 1200px;*/
         }
 
         .string {
@@ -428,6 +430,13 @@
 <!-- </div> -->
 
 
+    <!-- http://openrtdynamicsdemoapplication-env.bgzrqmwhr7.us-east-1.elasticbeanstalk.com/GUITemplate.html -->
+
+    <p>
+        <center>
+                <a href="http://openrtdynamicsdemoapplication-env.bgzrqmwhr7.us-east-1.elasticbeanstalk.com/GUITemplate.html" target="_blank" style=" height:60px; font-size:24px"> <i class="fa fa-play"></i>Launch a demo application</a>
+        </center>
+    </p>
 
 
 <div class="sec">
@@ -465,6 +474,8 @@ endfunction
         </div>
 
     </div>
+
+
 </div>
 
 
@@ -695,10 +706,22 @@ ForLoop_fn=ForLoopFn, SimnestName="ForLoopTest", NitSignal=CountTo, list("Userda
 
 
 <div class="sec">
-    <h1 id="SecHow">Documentation</h1>
+    <h1 id="SecHow">Documentation / Getting started</h1>
 
+    <p>
+        To start with a bare-bones template for a real-time application (fixed, regular timing) you might choose the following 
+        <a href="https://github.com/OpenRTDynamics/ORTD/blob/master/examples/Template_rtcontrol">example</a>. Run the file <tt>RTmain.sce</tt> using Scilab (with the ORTD-toolbox loaded) which will generate the compiled real-time program files <tt>RTmain.ipar</tt> and <tt>RTmain.rpar</tt>. Then, from the command line and within the same folder of the RTmain.*-files, run <tt>ortdrun</tt> (or <tt>ortdrun -s RTmain</tt>) to start the real-time program.
+    </p>
 
-    <a href="scilab_en_US_help/index.html"> HTML-Documentation pages </a>
+    <p>
+        To start with a template that also includes an HTML-based GUI please follow: <a href="https://github.com/OpenRTDynamics/TemplateGUI">node.js/ORTD/HTML-Template</a>
+    </p>
+
+    <p>
+        For reference on the available commands/blocks please consider the 
+        <a href="scilab_en_US_help/index.html"> HTML-Documentation pages </a>.
+    </p>
+
 
 </div>
 
