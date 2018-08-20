@@ -451,7 +451,7 @@ function [sim, x,v] = oscillator(sim, u)
     // create a feedback signal
     [sim,x_feedback] = libdyn_new_feedback(sim);
 
-        // use this as a normal signal
+        // implement a double-integrator chain
         [sim,a] = ld_add(sim, 0, list(u, x_feedback), [1, -1]);
         [sim,v] = ld_ztf(sim, 0, a, 1/(z-1) * T_a ); // Integrator approximation
         [sim,x] = ld_ztf(sim, 0, v, 1/(z-1) * T_a ); // Integrator approximation  
